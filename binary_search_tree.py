@@ -78,13 +78,13 @@ class BinarySearchTree(Generic[T]):
                         child_parent = right
                         child = right.left
                         right = right.left
-                    if child.right is not None:
-                        if child_parent.left is child:
-                            # El hijo esta a la izquierda
-                            child_parent.left = child.right 
-                        else:
-                            # El hijo esta a la derecha
-                            child_parent.right = child.right
+                    #if child.right is not None:
+                    if child_parent.left is child:
+                        # El hijo esta a la izquierda
+                        child_parent.left = child.right 
+                    else:
+                        # El hijo esta a la derecha
+                        child_parent.right = child.right
                     if father is not None:
                         if child.data < father.data:
                             father.left = child
@@ -99,24 +99,32 @@ class BinarySearchTree(Generic[T]):
 
                 elif subtree.hos_children() == "left":
                     child = subtree.left
-                    if subtree.data < father.data:
-                        father.left = None
+                    if subtree == self.__root:
                         subtree.left = None
-                        father.left = child
-                    elif subtree.data > father.data:
-                        father.right = None
-                        subtree.left = None
-                        father.right = child
+                        self.__root = child
+                    else:
+                        if subtree.data < father.data:
+                            father.left = None
+                            subtree.left = None
+                            father.left = child
+                        elif subtree.data > father.data:
+                            father.right = None
+                            subtree.left = None
+                            father.right = child
                 elif subtree.hos_children() == "right":
                     child = subtree.right
-                    if subtree.data < father.data:
-                        father.left = None
+                    if subtree == self.__root:
                         subtree.right = None
-                        father.left = child
-                    elif subtree.data > father.data:
-                        father.right = None
-                        subtree.right = None
-                        father.right = child
+                        self.__root = child
+                    else:
+                        if subtree.data < father.data:
+                            father.left = None
+                            subtree.right = None
+                            father.left = child
+                        elif subtree.data > father.data:
+                            father.right = None
+                            subtree.right = None
+                            father.right = child
             return subtree
         elif data < subtree.data:
             return self.__delete(data, subtree.left, subtree)
