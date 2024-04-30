@@ -63,10 +63,13 @@ class BinarySearchTree(Generic[T]):
             return None
         if subtree.data == data:
             if subtree.is_leaf():
-                if subtree.data < father.data:
-                    father.left = None
-                elif subtree.data > father.data:
-                    father.right = None
+                if subtree is self.__root:
+                    self.__root = None
+                else:
+                    if subtree.data < father.data:
+                        father.left = None
+                    elif subtree.data > father.data:
+                        father.right = None
             else:
                 if subtree.hos_children() == "none":
                     pass
